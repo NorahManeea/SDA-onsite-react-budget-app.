@@ -21,6 +21,9 @@ export default function Income(prop: IncomeProp) {
       };
 
       prop.setIncomeList([...prop.incomeList, newIncome]);
+
+      prop.updateBalance(newIncome.amount, 1);
+
       // Clear expenseInputs state
       setIncomeInputs({ income: "", incomeAmount: 0, date: "" });
     }
@@ -74,10 +77,10 @@ export default function Income(prop: IncomeProp) {
       </form>
       <div className="list">
         <ul>
-          <h4>Expense:</h4>
+          <h4>Income:</h4>
           {prop.incomeList.map((income, index) => (
             <li key={index}>
-              Expense: {income.income}, Amount: {income.amount}, Date:
+              Income: {income.income}, Amount: {income.amount}, Date:
               {income.date}
               <button onClick={() => handleDeleteIncome(index)}>Delete</button>
             </li>

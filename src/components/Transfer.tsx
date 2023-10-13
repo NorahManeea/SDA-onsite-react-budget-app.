@@ -8,16 +8,6 @@ export default function Transfer(prop: TransferProp) {
   // Use State
   const [transferAmount, setTransferAmount] = useState(0);
 
-  const totalIncome = prop.incomeList.reduce(
-    (total, income) => total + income.amount,
-    0
-  );
-  const totalExpense = prop.expenseList.reduce(
-    (total, expense) => total + expense.amount,
-    0
-  );
-  let balance = totalIncome - totalExpense;
-
   const handleTransferAmountChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -28,19 +18,21 @@ export default function Transfer(prop: TransferProp) {
   const handleTransfer = (e: React.FormEvent) => {
     e.preventDefault();
     // Check Current Balance
-    if (balance >= transferAmount) {
+    if (prop.currentBalance >= transferAmount) {
       // Update the currentSaving state in the Target component
       prop.setCurrentSaving(transferAmount);
       setTransferAmount(0); // Reset the transfer input
+      prop.updateCurrentSaving(transferAmount);
+      prop.updateBalance(transferAmount, -1);
     } else {
-      console.log("You don't have enoough money!");
+      console.log("You don't have enough money!");
     }
   };
   return (
     <div>
       <form>
         <p>
-          Current Balance: <span>{balance}</span>
+          Current Balance: <span>{prop.currentBalance}</span>
         </p>
         <label htmlFor="target">Transfer to saving account:</label>
         <input

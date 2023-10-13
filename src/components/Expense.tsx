@@ -22,6 +22,7 @@ export default function Expense(prop: ExpenseProp) {
       };
 
       prop.setExpenseList([...prop.expenseList, newExpense]);
+      prop.updateBalance(newExpense.amount, -1);
 
       // Clear expenseInputs state
       setExpenseInputs({ expense: "", amount: 0, date: "" });

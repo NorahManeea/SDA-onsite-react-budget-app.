@@ -14,11 +14,13 @@ export type IncomeType = {
 export type ExpenseProp = {
   expenseList: ExpenseType[];
   setExpenseList: React.Dispatch<React.SetStateAction<ExpenseType[]>>;
+  updateBalance: (amount: number, calculation: number) => void
 };
 
 export type IncomeProp = {
   incomeList: IncomeType[];
   setIncomeList: React.Dispatch<React.SetStateAction<IncomeType[]>>;
+  updateBalance: (amount: number, calculation: number) => void
 };
 
 export type TargetProp = {
@@ -31,4 +33,7 @@ export type TransferProp = {
   expenseList: ExpenseType[];
   currentSaving: number;
   setCurrentSaving: React.Dispatch<React.SetStateAction<number>>;
+  currentBalance:number
+  updateCurrentSaving: (amount: number) => void 
+  updateBalance: (amount: number, calculation: number) => void
 };

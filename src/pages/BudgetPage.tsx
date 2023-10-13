@@ -12,12 +12,24 @@ export default function BudgetPage() {
   const [expenseList, setExpenseList] = useState<ExpenseType[]>([]);
   const [currentSaving, setCurrentSaving] = useState(0);
   const [currentBalance, setCurrentBalance] = useState(0);
+ 
+  const updateBalance = (amount: number, calculation:number) => {
+    if (calculation === -1) {
+      setCurrentBalance(currentBalance - amount);
+    } else if (calculation === 1) {
+      setCurrentBalance(currentBalance + amount);
+    }
+  };
+
+  const updateCurrentSaving = (amount:number) => {
+    setCurrentSaving(currentSaving + amount);
+  };
   return (
     <div>
-       <Income incomeList={incomeList} setIncomeList={setIncomeList}/>
-        <Expense expenseList={expenseList} setExpenseList={setExpenseList}/>
+       <Income incomeList={incomeList} setIncomeList={setIncomeList} updateBalance={updateBalance}/>
+        <Expense expenseList={expenseList} setExpenseList={setExpenseList} updateBalance={updateBalance}/>
         <Target currentSaving={currentSaving} setCurrentSaving={setCurrentSaving}/>
-        <Transfer incomeList={incomeList} expenseList={expenseList} currentSaving={currentSaving} setCurrentSaving={setCurrentSaving}/>
+        <Transfer incomeList={incomeList} expenseList={expenseList} currentSaving={currentSaving} currentBalance={currentBalance} setCurrentSaving={setCurrentSaving} updateCurrentSaving={updateCurrentSaving} updateBalance={updateBalance}/>
     </div>
   )
 }
