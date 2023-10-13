@@ -5,13 +5,14 @@
 }
 
 .formsContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
   gap: 50px;
 }
 
 form {
   display: flex;
-  height: 100%;
+  height: 350px;
   width: 100%;
   flex-direction: column;
   align-items: center;
@@ -19,6 +20,7 @@ form {
   background-color: #f2f2f2;
   padding: 20px;
   border-radius: 5px;
+  margin-top: 0;
 }
 
 
@@ -44,4 +46,13 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+h4,li{
+  color: #f2f2f2;
+}
+.list{
+  gap: 4px;
+}
+li{
+ padding-bottom: 10px;
 }

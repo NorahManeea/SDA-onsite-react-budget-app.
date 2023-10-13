@@ -1,30 +1,27 @@
 import React, { useState } from "react";
 
-type Expense = {
-  expense: string;
-  amount: number;
-  date: string;
-};
-export default function Expense() {
+import { ExpenseType, ExpenseProp } from "../types/types";
+import { Box, Button, Typography } from "@mui/material";
+
+export default function Expense(prop: ExpenseProp) {
   // UseState
   const [expenseInputs, setExpenseInputs] = useState({
     expense: "",
     amount: 0,
     date: "",
   });
-  const [expenseList, setExpenseList] = useState<Expense[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (expenseInputs.amount >= 0) {
-      const newExpense: Expense = {
+      const newExpense: ExpenseType = {
         expense: expenseInputs.expense,
         amount: expenseInputs.amount,
         date: expenseInputs.date,
       };
 
-      setExpenseList([...expenseList, newExpense]);
+      prop.setExpenseList([...prop.expenseList, newExpense]);
 
       // Clear expenseInputs state
       setExpenseInputs({ expense: "", amount: 0, date: "" });
@@ -44,6 +41,12 @@ export default function Expense() {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value;
     setExpenseInputs({ ...expenseInputs, date: newDate });
+  };
+
+  const handleDeleteExpense = (index: number) => {
+    const updatedExpenseList = [...prop.expenseList];
+    updatedExpenseList.splice(index, 1);
+    prop.setExpenseList(updatedExpenseList);
   };
 
   return (
@@ -76,6 +79,18 @@ export default function Expense() {
         />
         <button aria-label="add-expense">Add Expense</button>
       </form>
+      <div className="list">
+        <ul>
+          <h4>Expense:</h4>
+          {prop.expenseList.map((expense, index) => (
+            <li key={index}>
+              Expense: {expense.expense}, Amount: {expense.amount}, Date:
+              {expense.date}
+              <button onClick={() => handleDeleteExpense(index)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

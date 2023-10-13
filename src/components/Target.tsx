@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 
-export default function Target() {
-  // UseState
+import { TargetProp } from "../types/types";
+import { Button } from "@mui/material";
+
+export default function Target(prop: TargetProp) {
+  // UseStates
   const [targetInputs, setTargetInputs] = useState({
     target: 0,
-    currentSaving: 0,
   });
 
   const handleButtonClicked = () => {
-    setTargetInputs({ target: 0, currentSaving: 0 });
+    setTargetInputs({ target: 0 });
   };
 
   const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTarget = Number(e.target.value);
     setTargetInputs({ ...targetInputs, target: newTarget });
   };
-  const progress = 0;
+  let progress =
+    targetInputs.target > 0
+      ? (prop.currentSaving / targetInputs.target) * 100
+      : 0;
+  //const progress = ;
   return (
     <div className="targetForm form">
       <form>
@@ -28,14 +34,17 @@ export default function Target() {
           onChange={handleTargetChange}
         />
         <p>
-          Current Saving: <span>{targetInputs.currentSaving}</span>
+          Current Saving: <span>{prop.currentSaving}</span>
         </p>
         <p>Target: {targetInputs.target}</p>
         <div>
           <p>
             Progress: <span>{progress}%</span>
           </p>
-          <progress value="0" max="100"></progress>
+          <progress
+            value={prop.currentSaving}
+            max={Number(targetInputs)}
+          ></progress>
         </div>
         <button aria-label="reset" onClick={handleButtonClicked}>
           Reset

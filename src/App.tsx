@@ -1,19 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import BudgetPage from "./pages/BudgetPage";
+
 // CSS File
 import "./App.css";
-// Components
-import Income from "./components/Income";
-import Expense from "./components/Expense";
-import Target from "./components/Target";
-import Transfer from "./components/Transfer";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       <div className="formsContainer">
-        <Income />
-        <Expense />
-        <Target />
+        <Routes>
+          <Route path="/budget-app" element={<BudgetPage />} />
+        </Routes>
+        <BudgetPage />
       </div>
     </div>
   );

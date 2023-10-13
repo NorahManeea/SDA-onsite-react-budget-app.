@@ -1,11 +1,9 @@
 import React, { useState } from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
-type Income = {
-  income: string;
-  amount: number;
-  date: string;
-};
-export default function Income() {
+import { IncomeType, IncomeProp } from "../types/types";
+
+export default function Income(prop: IncomeProp) {
   // UseState
   const [incomeInputs, setIncomeInputs] = useState({
     income: "",
@@ -13,20 +11,16 @@ export default function Income() {
     date: "",
   });
 
-  const [incomeList, setIncomeList] = useState<Income[]>([]);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (incomeInputs.incomeAmount >= 0) {
-      const newIncome: Income = {
+      const newIncome: IncomeType = {
         income: incomeInputs.income,
         amount: incomeInputs.incomeAmount,
         date: incomeInputs.date,
       };
 
-      setIncomeList([...incomeList, newIncome]);
-
+      prop.setIncomeList([...prop.incomeList, newIncome]);
       // Clear expenseInputs state
       setIncomeInputs({ income: "", incomeAmount: 0, date: "" });
     }
@@ -46,9 +40,13 @@ export default function Income() {
     const newDate = e.target.value;
     setIncomeInputs({ ...incomeInputs, date: newDate });
   };
-
+  const handleDeleteIncome = (index: number) => {
+    const updatedIncomeList = [...prop.incomeList];
+    updatedIncomeList.splice(index, 1);
+    prop.setIncomeList(updatedIncomeList);
+  };
   return (
-    <div className="form">
+    <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="income-source">Income Source:</label>
         <input
@@ -74,6 +72,18 @@ export default function Income() {
         />
         <button aria-label="add-income">Add Income</button>
       </form>
+      <div className="list">
+        <ul>
+          <h4>Expense:</h4>
+          {prop.incomeList.map((income, index) => (
+            <li key={index}>
+              Expense: {income.income}, Amount: {income.amount}, Date:
+              {income.date}
+              <button onClick={() => handleDeleteIncome(index)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
